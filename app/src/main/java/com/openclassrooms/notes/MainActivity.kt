@@ -21,6 +21,9 @@ class MainActivity : AppCompatActivity() {
      */
     private lateinit var binding: ActivityMainBinding
 
+    /**
+     * An adapter for displaying a list of notes in a RecyclerView.
+     */
     private val notesAdapter = NotesAdapter(emptyList())
 
 //    private val notesRepository = NotesRepository()
@@ -53,8 +56,8 @@ class MainActivity : AppCompatActivity() {
 //        }
 //    }
 
-        /**
-     * Collects notes from the repository and updates the adapter.
+    /**
+     * Collects notes from the viewModel and updates the adapter.
      */
     private fun collectNotes(notesViewModel: NotesViewModel) {
         lifecycleScope.launch {
@@ -88,7 +91,6 @@ class MainActivity : AppCompatActivity() {
                     resources.getInteger(R.integer.span_count)
                 )
             )
-
             adapter = notesAdapter
         }
     }
