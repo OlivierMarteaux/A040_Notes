@@ -11,6 +11,20 @@ import com.openclassrooms.notes.repository.NotesRepository
 import com.openclassrooms.notes.widget.NotesAdapter
 import kotlinx.coroutines.launch
 
-class NotesViewModel(notesRepository: NotesRepository) : ViewModel() {
+public class NotesViewModel() : ViewModel() {
+
+    private val notesRepository = NotesRepository()
+    private val notesAdapter = NotesAdapter(emptyList())
+
+    /**
+     * Collects notes from the repository and updates the adapter.
+     */
+    public fun collectNotes() {
+        viewModelScope.launch {
+            notesRepository.notes.collect {
+                notesAdapter.updateNotes(it)
+            }
+        }
+    }
 
 }

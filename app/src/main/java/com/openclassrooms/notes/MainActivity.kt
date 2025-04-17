@@ -2,13 +2,8 @@ package com.openclassrooms.notes
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.openclassrooms.notes.ViewModel.MainViewModel
-import com.openclassrooms.notes.ViewModel.NotesViewModel
 import com.openclassrooms.notes.databinding.ActivityMainBinding
 import com.openclassrooms.notes.repository.NotesRepository
 import com.openclassrooms.notes.widget.NoteItemDecoration
@@ -20,10 +15,10 @@ import kotlinx.coroutines.launch
  */
 class MainActivity : AppCompatActivity() {
 
-    /**
-     * Initializes the ViewModel for this activity.
-     */
-    private val notesViewModel: ViewModel = ViewModelProvider(this).get()
+//    /**
+//     * Initializes the ViewModel for this activity.
+//     */
+//    private val notesViewModel: ViewModel = ViewModelProvider(this).get()
 
     /**
      * The binding for the main layout.
@@ -32,10 +27,17 @@ class MainActivity : AppCompatActivity() {
 
     private val notesAdapter = NotesAdapter(emptyList())
 
-//    private val notesRepository = NotesRepository()
+    private val notesRepository = NotesRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+//        // Create a ViewModel the first time the system calls an activity's onCreate() method.
+//        // Re-created activities receive the same DiceRollViewModel instance created by the first activity.
+//
+//        // Use the 'by viewModels()' Kotlin property delegate
+//        // from the activity-ktx artifact
+//        val notesViewModel: NotesViewModel by viewModels()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun collectNotes() {
         lifecycleScope.launch {
-            notesViewModel.notesRepository.notes.collect {
+            notesRepository.notes.collect {
                 notesAdapter.updateNotes(it)
             }
         }
