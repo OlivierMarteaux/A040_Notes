@@ -1,5 +1,6 @@
 # A040_Notes
   
+![Screen 1](assets/images/A040_Notes_screen01_20250417.jpg)	
   
 **OpenClassroom training:**  
 Projet 4 - Exercice 1 - Refactorisez une appli en Kotlin en POO et MVVM
