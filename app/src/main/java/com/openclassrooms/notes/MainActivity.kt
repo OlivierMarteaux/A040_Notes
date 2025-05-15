@@ -3,13 +3,11 @@ package com.openclassrooms.notes
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.openclassrooms.notes.ViewModel.NotesViewModel
+import com.openclassrooms.notes.viewmodel.NotesViewModel
 import com.openclassrooms.notes.databinding.ActivityMainBinding
 import com.openclassrooms.notes.widget.NoteItemDecoration
 import com.openclassrooms.notes.widget.NotesAdapter
-import kotlinx.coroutines.launch
 
 /**
  * The main activity for the app.
@@ -20,13 +18,10 @@ class MainActivity : AppCompatActivity() {
      * The binding for the main layout.
      */
     private lateinit var binding: ActivityMainBinding
-
     /**
      * An adapter for displaying a list of notes in a RecyclerView.
      */
     private val notesAdapter = NotesAdapter(emptyList())
-
-//    private val notesRepository = NotesRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,29 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         initRecyclerView()
         initFABButton()
-        collectNotes(notesViewModel)
-    }
-
-//    /**
-//     * Collects notes from the repository and updates the adapter.
-//     */
-//    private fun collectNotes() {
-//        lifecycleScope.launch {
-//            notesRepository.notes.collect {
-//                notesAdapter.updateNotes(it)
-//            }
-//        }
-//    }
-
-    /**
-     * Collects notes from the viewModel and updates the adapter.
-     */
-    private fun collectNotes(notesViewModel: NotesViewModel) {
-        lifecycleScope.launch {
-            notesViewModel.notes.collect {
-                notesAdapter.updateNotes(it)
-            }
-        }
+        notesAdapter.updateNotes(notesViewModel.getNotes())
     }
 
     /**
